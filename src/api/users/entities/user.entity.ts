@@ -1,11 +1,11 @@
 import { Exclude } from 'class-transformer';
-import { IUser } from '../interface.ts/user.interface';
+import { IUser } from '../interface/user.interface';
 import { CreateUserDto } from '../dto/create-user.dto';
 
-export class User implements IUser {
+export class User implements IUser{
   id: string;
   login: string;
-  @Exclude({ toPlainOnly: true })
+  @Exclude()
   password: string;
   version: number;
   createdAt: number;

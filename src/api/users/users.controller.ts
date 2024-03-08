@@ -15,18 +15,17 @@ import { UpdatePasswordDto } from './dto/update-password.dto';
 import { User } from './entities/user.entity';
 import { StatusCodes } from 'http-status-codes';
 import { plainToInstance } from 'class-transformer';
-@Controller('users')
+@Controller('user')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
   @Post()
   @HttpCode(StatusCodes.CREATED)
   create(@Body() dto: CreateUserDto): User {
-    //return new User(this.usersService.create(dto));
     return plainToInstance(User, this.usersService.create(dto));
   }
 
   @Get()
-  findAll(): User[] {
+  findAll() {
     return plainToInstance(User, this.usersService.findAll());
   }
 
@@ -35,8 +34,9 @@ export class UsersController {
     return plainToInstance(User, this.usersService.findOne(id));
   }
 
-  @HttpCode(StatusCodes.OK)
+
   @Put(':id')
+  @HttpCode(StatusCodes.OK)
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdatePasswordDto,
@@ -44,9 +44,10 @@ export class UsersController {
     return plainToInstance(User, this.usersService.update(id, dto));
   }
 
-  @HttpCode(StatusCodes.NO_CONTENT)
+
   @Delete(':id')
-  remove(@Param('id', ParseUUIDPipe) id: string): User[] {
+  @HttpCode(StatusCodes.NO_CONTENT)
+  remove(@Param('id', ParseUUIDPipe) id: string){
     return plainToInstance(User, this.usersService.remove(id));
   }
 }

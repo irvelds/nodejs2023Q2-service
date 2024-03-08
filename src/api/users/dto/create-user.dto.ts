@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { ICreateUserDtoType } from '../interface.ts/user.interface';
+import { ICreateUserDtoType } from '../interface/user.interface';
 import { IsString, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto implements ICreateUserDtoType {

@@ -1,4 +1,4 @@
-import { IUpdatePasswordDto } from '../interface.ts/user.interface';
+import { IUpdatePasswordDto } from '../interface/user.interface';
 import { IsString, IsNotEmpty } from 'class-validator';
 
 export class UpdatePasswordDto implements IUpdatePasswordDto {

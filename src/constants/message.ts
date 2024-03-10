@@ -1,4 +1,5 @@
 export const message = {
   notFoundMessage: 'Not found',
-  incorrectOldPassword: 'Incorrect old password',
+  incorrectOldPasswordMessage: 'Incorrect old password',
+  existInFavoritesMessage: 'Already added to favorites',
 };

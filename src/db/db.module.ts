@@ -6,4 +6,3 @@ import { Db } from './db';
   providers: [Db],
 })
 export class DbModule {}
-

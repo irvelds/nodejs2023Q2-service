@@ -3,15 +3,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Db } from 'src/db/db';
 
 import { message } from 'src/constants/message';
-import {
-  v4 as uuidv4
-} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { AlbumDto } from './dto/album.dto';
 import { Album } from './entities/album.entity';
 
 @Injectable()
 export class AlbumsService {
-  constructor(private db: Db) { }
+  constructor(private db: Db) {}
   create(dto: AlbumDto) {
     const newAlbum: Album = {
       id: uuidv4(),
@@ -37,7 +35,7 @@ export class AlbumsService {
     if (findAlbum) {
       return findAlbum;
     }
-   }
+  }
 
   update(id: string, dto: AlbumDto): Album {
     const findAlbum = this.findAlbumtById(id);
@@ -47,7 +45,7 @@ export class AlbumsService {
         ...dto,
       };
 
-      this.db.albums = this.db.albums.map(album => {
+      this.db.albums = this.db.albums.map((album) => {
         if (album.id === id) {
           return updateAlbum;
         }
@@ -55,7 +53,7 @@ export class AlbumsService {
       });
       return updateAlbum;
     }
-   }
+  }
 
   remove(id: string) {
     const findAlbum = this.findAlbumtById(id);
@@ -63,18 +61,20 @@ export class AlbumsService {
     if (findAlbum) {
       this.db.albums = this.db.albums.filter((album) => album.id !== id);
       this.db.tracks = this.removeAlbumFromTracks(id);
+      this.db.favorites.albums = this.db.favorites.albums.filter(
+        (albumId) => albumId !== id,
+      );
     }
   }
   removeAlbumFromTracks(id: string) {
     return this.db.tracks.map((track) => {
       if (track.albumId === id) {
-        return { ...track, albumId: null }
-      }
-      else return track
-    })
+        return { ...track, albumId: null };
+      } else return track;
+    });
   }
 
-  findAlbumtById(id: string){
+  findAlbumtById(id: string) {
     const findAlbum = this.db.albums.find((album) => album.id === id);
     if (!findAlbum) {
       throw new HttpException(message.notFoundMessage, HttpStatus.NOT_FOUND);

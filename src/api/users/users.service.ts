@@ -3,13 +3,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { Db } from 'src/db/db';
 import { message } from 'src/constants/message';
-import {
-  v4 as uuidv4
-} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { User } from './entities/user.entity';
 @Injectable()
 export class UsersService {
-  constructor(private db: Db) { }
+  constructor(private db: Db) {}
   create(dto: CreateUserDto) {
     const newUser: User = {
       id: uuidv4(),
@@ -38,7 +36,7 @@ export class UsersService {
     const findUser = this.findUserById(id);
     if (findUser) {
       return findUser;
-    } 
+    }
   }
 
   update(id: string, dto: UpdatePasswordDto): User {
@@ -46,7 +44,7 @@ export class UsersService {
     if (findUser) {
       if (findUser.password !== dto.oldPassword) {
         throw new HttpException(
-          message.incorrectOldPassword,
+          message.incorrectOldPasswordMessage,
           HttpStatus.FORBIDDEN,
         );
       }
@@ -66,25 +64,20 @@ export class UsersService {
       });
       return updateUser;
     }
-   
   }
 
   remove(id: string) {
     const findUser = this.findUserById(id);
     if (findUser) {
       this.db.users = this.db.users.filter((user) => user.id !== id);
-    } 
-   }
+    }
+  }
 
-   
-  findUserById(id: string){
+  findUserById(id: string) {
     const findUser = this.db.users.find((user) => user.id === id);
     if (!findUser) {
       throw new HttpException(message.notFoundMessage, HttpStatus.NOT_FOUND);
     }
     return findUser ?? null;
   }
-
 }
-
-

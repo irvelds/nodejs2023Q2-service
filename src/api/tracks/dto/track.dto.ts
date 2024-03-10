@@ -1,4 +1,3 @@
-
 import {
   IsNotEmpty,
   IsString,
@@ -25,4 +24,3 @@ export class TrackDto implements Omit<ITrack, 'id'> {
   @IsString()
   name: string;
 }
-

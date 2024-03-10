@@ -17,7 +17,7 @@ import { StatusCodes } from 'http-status-codes';
 import { plainToInstance } from 'class-transformer';
 @Controller('user')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
   @Post()
   @HttpCode(StatusCodes.CREATED)
   create(@Body() dto: CreateUserDto): User {
@@ -34,7 +34,6 @@ export class UsersController {
     return plainToInstance(User, this.usersService.findOne(id));
   }
 
-
   @Put(':id')
   @HttpCode(StatusCodes.OK)
   update(
@@ -44,10 +43,9 @@ export class UsersController {
     return plainToInstance(User, this.usersService.update(id, dto));
   }
 
-
   @Delete(':id')
   @HttpCode(StatusCodes.NO_CONTENT)
-  remove(@Param('id', ParseUUIDPipe) id: string){
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return plainToInstance(User, this.usersService.remove(id));
   }
 }

@@ -3,17 +3,15 @@ import { ArtistDto } from './dto/artist.dto';
 import { Db } from 'src/db/db';
 import { Artist } from './entities/artist.entity';
 import { message } from 'src/constants/message';
-import {
-  v4 as uuidv4
-} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class ArtistsService {
-  constructor(private db: Db) { }
+  constructor(private db: Db) {}
   create(dto: ArtistDto) {
     const newArtist: Artist = {
       id: uuidv4(),
       name: dto.name,
-      grammy: dto.grammy
+      grammy: dto.grammy,
     };
 
     this.db.artists.push(newArtist);
@@ -35,7 +33,6 @@ export class ArtistsService {
     if (findArtist) {
       return findArtist;
     }
-    
   }
 
   update(id: string, dto: ArtistDto): Artist {
@@ -47,7 +44,7 @@ export class ArtistsService {
         grammy: dto.grammy,
       };
 
-      this.db.artists = this.db.artists.map(artist => {
+      this.db.artists = this.db.artists.map((artist) => {
         if (artist.id === id) {
           return updateArtist;
         }
@@ -55,7 +52,7 @@ export class ArtistsService {
       });
       return updateArtist;
     }
-   }
+  }
 
   remove(id: string) {
     const findArtist = this.findArtistById(id);
@@ -64,29 +61,29 @@ export class ArtistsService {
       this.db.artists = this.db.artists.filter((artist) => artist.id !== id);
       this.db.tracks = this.removeArtistFromTracks(id);
       this.db.albums = this.removeArtistFromAlbums(id);
+      this.db.favorites.artists = this.db.favorites.artists.filter(
+        (artistId) => artistId !== id,
+      );
     }
-    }
+  }
 
   removeArtistFromTracks(id: string) {
     return this.db.tracks.map((track) => {
       if (track.artistId === id) {
-        return { ...track, artistId: null }
-      }
-      else return track
-    })
+        return { ...track, artistId: null };
+      } else return track;
+    });
   }
 
   removeArtistFromAlbums(id: string) {
     return this.db.albums.map((album) => {
       if (album.artistId === id) {
-        return { ...album, artistId: null }
-      }
-      else return album
-    })
-
+        return { ...album, artistId: null };
+      } else return album;
+    });
   }
 
-  findArtistById(id: string){
+  findArtistById(id: string) {
     const findArtist = this.db.artists.find((artist) => artist.id === id);
     if (!findArtist) {
       throw new HttpException(message.notFoundMessage, HttpStatus.NOT_FOUND);

@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, ParseUUIDPipe, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  ParseUUIDPipe,
+  Put,
+} from '@nestjs/common';
 import { ArtistsService } from './artists.service';
 import { ArtistDto } from './dto/artist.dto';
 
@@ -32,7 +42,6 @@ export class ArtistsController {
   ): Artist {
     return this.artistsService.update(id, dto);
   }
-
 
   @Delete(':id')
   @HttpCode(StatusCodes.NO_CONTENT)

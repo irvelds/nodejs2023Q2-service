@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body,  Param, Delete, HttpCode, ParseUUIDPipe, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  ParseUUIDPipe,
+  Put,
+} from '@nestjs/common';
 
 import { StatusCodes } from 'http-status-codes';
 
@@ -6,7 +16,6 @@ import { plainToInstance } from 'class-transformer';
 import { AlbumsService } from './albums.service';
 import { AlbumDto } from './dto/album.dto';
 import { Album } from './entities/album.entity';
-
 
 @Controller('album')
 export class AlbumsController {
@@ -29,10 +38,7 @@ export class AlbumsController {
 
   @HttpCode(StatusCodes.OK)
   @Put(':id')
-  update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: AlbumDto,
-  ): Album {
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: AlbumDto): Album {
     return plainToInstance(Album, this.albumsService.update(id, dto));
   }
 

@@ -5,7 +5,13 @@ import { User } from 'src/api/users/entities/user.entity';
 
 export interface IDatabase {
   users: User[];
-  artists: Artist[],
-  tracks: Track[],
-  albums: Album[]
+  artists: Artist[];
+  tracks: Track[];
+  albums: Album[];
+  favorites: IFavorites;
+}
+export interface IFavorites {
+  artists: string[];
+  albums: string[];
+  tracks: string[];
 }

@@ -8,14 +8,31 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/irvelds/nodejs2023Q2-service
 ```
 
 ## Installing NPM modules
 
 ```
+cd nodejs2023Q2-service
+```
+
+```
+git checkout rest_service
+```
+
+```
 npm install
 ```
+
+## Environment variables
+
+Before running the application, you need to set the environment variables in the `.env` file (see the template .env.example file).
+
+```
+cp .env.example .env
+```
+
 
 ## Running application
 

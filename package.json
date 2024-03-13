@@ -21,7 +21,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "docker:up": "docker-compose up",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "docker:scout:app": "docker scout cves nodejs2023q2-service-app",
+    "docker:scout:db": "docker scout cves nodejs2023q2-service-db",
+    "docker:scout": "npm run docker:scout:app && npm run docker:scout:db"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.3",

@@ -20,32 +20,32 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Post()
   @HttpCode(StatusCodes.CREATED)
-  create(@Body() dto: CreateUserDto): User {
-    return plainToInstance(User, this.usersService.create(dto));
+  async create(@Body() dto: CreateUserDto) {
+    return plainToInstance(User, await this.usersService.create(dto));
   }
 
   @Get()
-  findAll() {
-    return plainToInstance(User, this.usersService.findAll());
+  async findAll() {
+    return plainToInstance(User, await this.usersService.findAll());
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string): User {
-    return plainToInstance(User, this.usersService.findOne(id));
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return plainToInstance(User, await this.usersService.findOne(id));
   }
 
   @Put(':id')
   @HttpCode(StatusCodes.OK)
-  update(
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdatePasswordDto,
-  ): User {
-    return plainToInstance(User, this.usersService.update(id, dto));
+  ) {
+    return plainToInstance(User, await this.usersService.update(id, dto));
   }
 
   @Delete(':id')
   @HttpCode(StatusCodes.NO_CONTENT)
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return plainToInstance(User, this.usersService.remove(id));
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return plainToInstance(User, await this.usersService.remove(id));
   }
 }

@@ -1,14 +1,15 @@
 
 FROM node:20-alpine3.18
 
+EXPOSE ${PORT}
+
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
-
 RUN npm install && npm cache clean --force
 
 COPY . .
 
-EXPOSE ${PORT}
+RUN npm run build
 
-CMD [ "npm", "run", "start:dev" ]
+CMD npm run start:dev

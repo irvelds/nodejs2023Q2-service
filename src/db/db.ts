@@ -1,11 +1,11 @@
 import { IAlbum } from 'src/api/albums/interface/album.interface';
 import { IArtist } from 'src/api/artists/interface/artist.interface';
 import { ITrack } from 'src/api/tracks/interface/track.interface';
-import { IUser } from 'src/api/users/interface/user.interface';
+import { User } from 'src/api/users/entities/user.entity';
 import { IDatabase, IFavorites } from 'src/models/interfaces';
 
-export class Db implements IDatabase {
-  users: IUser[] = [];
+export class Db {
+  // users: User[] = [];
   artists: IArtist[] = [];
   tracks: ITrack[] = [];
   albums: IAlbum[] = [];

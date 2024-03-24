@@ -1,10 +1,22 @@
-import { IAlbum } from 'src/api/albums/interface/album.interface';
-import { IArtist } from 'src/api/artists/interface/artist.interface';
-import { ITrack } from 'src/api/tracks/interface/track.interface';
-import { IFavorite } from '../interface/favorite.interface';
+import { Exclude } from 'class-transformer';
 
-export class Favorite implements IFavorite {
-  artists: IArtist[];
-  albums: IAlbum[];
-  tracks: ITrack[];
+import { Entity, PrimaryColumn, OneToMany } from 'typeorm';
+import { Artist } from 'src/api/artists/entities/artist.entity';
+import { Album } from 'src/api/albums/entities/album.entity';
+import { Track } from 'src/api/tracks/entities/track.entity';
+
+@Entity({ name: 'Favorites' })
+export class Favorites {
+  @PrimaryColumn({ default: 1 })
+  @Exclude()
+  id: number;
+
+  @OneToMany(() => Album, (album) => album.favorites)
+  albums: Album[];
+
+  @OneToMany(() => Artist, (artist) => artist.favorites)
+  artists: Artist[];
+
+  @OneToMany(() => Track, (track) => track.favorites)
+  tracks: Track[];
 }

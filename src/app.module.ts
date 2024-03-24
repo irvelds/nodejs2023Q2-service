@@ -6,7 +6,6 @@ import { ArtistsModule } from './api/artists/artists.module';
 import { TracksModule } from './api/tracks/tracks.module';
 import { AlbumsModule } from './api/albums/albums.module';
 import { FavoritesModule } from './api/favorites/favorites.module';
-import { DbModule } from './db/db.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './db/config';
@@ -18,7 +17,6 @@ import typeorm from './db/config';
     TracksModule,
     AlbumsModule,
     FavoritesModule,
-    DbModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],

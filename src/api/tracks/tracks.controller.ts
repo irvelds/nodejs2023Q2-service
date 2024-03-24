@@ -11,7 +11,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { StatusCodes } from 'http-status-codes';
-import { Track } from './entities/track.entity';
 import { TrackDto } from './dto/track.dto';
 import { TracksService } from './tracks.service';
 
@@ -20,7 +19,7 @@ export class TracksController {
   constructor(private readonly tracksService: TracksService) {}
   @Post()
   @HttpCode(StatusCodes.CREATED)
-  create(@Body() dto: TrackDto): Track {
+  create(@Body() dto: TrackDto) {
     return this.tracksService.create(dto);
   }
 
@@ -31,13 +30,13 @@ export class TracksController {
 
   @Get(':id')
   @HttpCode(StatusCodes.OK)
-  findOne(@Param('id', ParseUUIDPipe) id: string): Track {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.tracksService.findOne(id);
   }
 
   @Put(':id')
   @HttpCode(StatusCodes.OK)
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: TrackDto): Track {
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: TrackDto) {
     return this.tracksService.update(id, dto);
   }
 

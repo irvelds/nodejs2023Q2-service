@@ -1,12 +1,36 @@
-import { ArtistDto } from '../dto/artist.dto';
-import { IArtist } from '../interface/artist.interface';
+import { Album } from 'src/api/albums/entities/album.entity';
 
-export class Artist implements IArtist {
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  Entity,
+  ManyToOne,
+} from 'typeorm';
+import { Track } from 'src/api/tracks/entities/track.entity';
+import { Favorites } from 'src/api/favorites/entities/favorite.entity';
+
+@Entity()
+export class Artist {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column()
   name: string;
+
+  @Column()
   grammy: boolean;
 
-  constructor(dto: ArtistDto) {
-    Object.assign(this, dto);
-  }
+  @OneToMany(() => Track, (track) => track.artist)
+  tracks: Track[];
+
+  @OneToMany(() => Album, (album) => album.artist)
+  albums: Album[];
+
+  @ManyToOne(() => Favorites, (favorites) => favorites.artists)
+  favorites: Favorites;
+
+  // constructor(dto: ArtistDto) {
+  //   Object.assign(this, dto);
+  // }
 }

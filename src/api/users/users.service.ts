@@ -1,9 +1,8 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 // import { Db } from 'src/db/db';
 import { message } from 'src/constants/message';
-import { v4 as uuidv4 } from 'uuid';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -16,9 +15,7 @@ export class UsersService {
 
   async create(dto: CreateUserDto) {
     const user = await this.usersRepository.findOne({
-      where: {
-        login: dto.login,
-      },
+      where: { login: dto.login },
     });
     if (user) {
       throw new HttpException(message.existUser, HttpStatus.CONFLICT);
@@ -46,8 +43,8 @@ export class UsersService {
         HttpStatus.FORBIDDEN,
       );
     }
-    await this.usersRepository.update(id, { password: dto.newPassword });
-    //user.password = dto.newPassword;
+    //await this.usersRepository.update(id, { password: dto.newPassword });
+    user.password = dto.newPassword;
     return await this.usersRepository.save(user);
   }
 

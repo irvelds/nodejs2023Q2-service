@@ -1,26 +1,22 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  VersionColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  VersionColumn,
-  ColumnOptions,
 } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto';
-
-const transformData = {
-  transformer: {
-    from: (value: string): number => new Date(value).getTime(),
-    to: (value: string): string => value,
-  },
-} as ColumnOptions;
-
-
+// const transformData = {
+//   transformer: {
+//     from: (value: string): number => new Date(value).getTime(),
+//     to: (value: string): string => value,
+//   },
+// } as ColumnOptions;
 @Entity({ name: 'User' })
 export class User {
-  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ unique: true })
@@ -33,10 +29,12 @@ export class User {
   @VersionColumn()
   version: number;
 
-  @CreateDateColumn(transformData)
+  @Transform(({ value }) => new Date(value).getTime())
+  @CreateDateColumn()
   createdAt: number;
 
-  @UpdateDateColumn(transformData)
+  @Transform(({ value }) => new Date(value).getTime())
+  @UpdateDateColumn()
   updatedAt: number;
 
   constructor(dto: CreateUserDto) {

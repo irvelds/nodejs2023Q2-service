@@ -20,11 +20,15 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "docker:up": "docker-compose up",
+    "docker": "docker-compose up",
     "docker:down": "docker-compose down",
     "docker:scout:app": "docker scout cves nodejs2023q2-service-app",
     "docker:scout:db": "docker scout cves nodejs2023q2-service-db",
-    "docker:scout": "npm run docker:scout:app && npm run docker:scout:db" 
+    "docker:scout": "npm run docker:scout:app && npm run docker:scout:db",
+    "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d src/db/config.ts",
+    "migration:gen": "npm run typeorm:cli -- migration:generate src/migrations/schema",
+    "migration:create": "npx typeorm migration:create src/migrations/create",
+    "migration:run": "npm run typeorm:cli -- migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.3",

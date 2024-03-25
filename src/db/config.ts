@@ -15,9 +15,12 @@ const config = {
   database: `${process.env.POSTGRES_DB}`,
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
-  autoLoadEntities: true,
-  synchronize: true,
-  //migrationsRun: true,
+  //autoLoadEntities: true,
+  synchronize: false,
+  migrationsRun: true,
+  cli: {
+    migrationsDir: 'src/migrations',
+  },
 };
 
 export default registerAs('typeorm', () => config);

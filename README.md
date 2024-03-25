@@ -8,24 +8,65 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/irvelds/nodejs2023Q2-service
 ```
 
 ## Installing NPM modules
 
 ```
+cd nodejs2023Q2-service
+```
+
+```
+git checkout docker
+```
+
+```
 npm install
 ```
 
-## Running application
+## Environment variables
+
+Before running the application, you need to set the environment variables in the `.env` file (see the template .env.example file).
 
 ```
-npm start
+cp .env.example .env
 ```
+
+
+## Running application with Docker
+
+Run docker on your PC
+
+Compose image for docker and run the application in development mode:
+
+```
+npm run docker
+```
+During `npm run docker` the migration is executed to update database schema.
+
 
 After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
+
+## Vulnerabilities scanning
+
+You can scan vulnerablities of images:
+
+```
+npm run docker:scan
+```
+
+## Download images
+
+You can scan download images from docker hub:
+
+```
+docker pull irvelds/homelibrary:nodejs2023q2-service-db
+docker pull irvelds/homelibrary:nodejs2023q2-service-app
+```
+
 
 ## Testing
 

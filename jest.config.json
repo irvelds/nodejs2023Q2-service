@@ -2,6 +2,7 @@
   "moduleFileExtensions": ["ts", "js"],
   "rootDir": "test",
   "testEnvironment": "node",
+  "testTimeout": 30000,
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   }

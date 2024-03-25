@@ -1,0 +1,59 @@
+
+version: '3.9'
+services:
+
+  postgres:
+    image: nodejs2023q2-service-db
+    container_name: postgres
+    build: ./db
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    command: ["postgres", "-c", "logging_collector=true", "-c", "log_directory=/var/log/postgresql"]  
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - pglogs:/var/log/postgresql
+    networks:
+      - custom_network
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+
+
+  app:
+    image: nodejs2023q2-service-app
+    container_name: app
+    build: .
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      POSTGRES_HOST: ${DB_HOST}
+    depends_on:
+      postgres:
+        condition: service_healthy  
+    volumes:
+      - ./src:/app/src/
+
+    networks:
+      - custom_network  
+      
+
+
+
+volumes:
+  pgdata: 
+  pglogs: 
+
+
+networks:
+  custom_network:
+    driver: ${DRIVER}
